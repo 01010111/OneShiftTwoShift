@@ -1,0 +1,30 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"name": "OneShiftTwoShift",
+			"path": "/home/zero/OneShiftTwoShift"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Flixel",
+			"path": "/usr/lib/haxe/lib/flixel/4,0,1/"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Flixel Addons",
+			"path": "/usr/lib/haxe/lib/flixel-addons/2,0,0/"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Zer0lib",
+			"path": "/usr/lib/haxe/lib/zerolib/git/"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Haxe",
+			"path": "/usr/lib/haxe/std"
+		}
+	]
+}
