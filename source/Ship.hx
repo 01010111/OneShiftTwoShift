@@ -10,6 +10,7 @@ class Ship extends FlxSprite
 {
 
 	public var poofs:Poof;
+	var bullets:Bullets;
 	var accel:Float = 1200;
 	public var speed:Float = 250;
 
@@ -25,10 +26,13 @@ class Ship extends FlxSprite
 		setSize(8, 1);
 		offset.set(12, 16);
 		poofs = new Poof(8);
+		bullets = new Bullets(16);
 		health = 100;
 	}
 
 	var temp_speed:Float = 350;
+	var bullet_timer:Int = 0;
+	var bullet_alt:Bool = true;
 
 	override public function update(e:Float):Void
 	{
@@ -45,6 +49,22 @@ class Ship extends FlxSprite
 		{
 			speed = 200;
 			temp_speed += (350 - temp_speed) * 0.02;
+			if (FlxG.keys.pressed.C)
+			{
+				if (bullet_timer == 0)
+				{
+					bullet_timer = 3;
+					var _b_p = getMidpoint();
+					_b_p.x += bullet_alt ? -6 : 4;
+					_b_p.y -= 4;
+					bullet_alt = !bullet_alt;
+					bullets.fire(_b_p, ZMath.velocityFromAngle(angle - 90, 600));
+				}
+				else
+					bullet_timer--;
+			}
+			else
+				bullet_timer = 0;
 		}
 
 		if (FlxG.keys.pressed.UP) acceleration.y -= accel;

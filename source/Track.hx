@@ -19,6 +19,7 @@ class Track extends FlxSprite
 		set_new_frame(f);
 		FlxG.state.add(this);
 		FlxG.watch.add(this, "ends", "e:");
+		useFramePixels = true;
 	}
 
 	override public function update(e:Float):Void

@@ -44,9 +44,11 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-
-		//FlxG.fullscreen = true;
-
+		
+		#if desktop
+		FlxG.fullscreen = true;
+		#end
+		
 		i = this;
 
 		bg = new FlxBackdrop("assets/images/bg.png");
