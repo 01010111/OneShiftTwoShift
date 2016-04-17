@@ -22,5 +22,5 @@
 -swf-lib export/flash/obj/assets.swf
 -swf-version 11.8
 -swf export/flash/bin/OneShiftTwoShift.swf
--swf-header 288:512:60:000000
+-swf-header 512:512:60:000000
 -cp export/flash/haxe

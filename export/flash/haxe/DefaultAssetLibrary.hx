@@ -60,6 +60,17 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__flixel_fonts_monsterrat_ttf);
 		
@@ -68,14 +79,36 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		#if flash
 		
+		className.set ("assets/images/bg.png", __ASSET__assets_images_bg_png);
+		type.set ("assets/images/bg.png", AssetType.IMAGE);
+		className.set ("assets/images/flag.png", __ASSET__assets_images_flag_png);
+		type.set ("assets/images/flag.png", AssetType.IMAGE);
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
 		type.set ("assets/images/images-go-here.txt", AssetType.TEXT);
+		className.set ("assets/images/indicator.png", __ASSET__assets_images_indicator_png);
+		type.set ("assets/images/indicator.png", AssetType.IMAGE);
 		className.set ("assets/images/tracks.ase", __ASSET__assets_images_tracks_ase);
 		type.set ("assets/images/tracks.ase", AssetType.BINARY);
+		className.set ("assets/images/ship.ase", __ASSET__assets_images_ship_ase);
+		type.set ("assets/images/ship.ase", AssetType.BINARY);
+		className.set ("assets/images/indicator.ase", __ASSET__assets_images_indicator_ase);
+		type.set ("assets/images/indicator.ase", AssetType.BINARY);
 		className.set ("assets/images/tracks.png", __ASSET__assets_images_tracks_png);
 		type.set ("assets/images/tracks.png", AssetType.IMAGE);
+		className.set ("assets/images/palette.ase", __ASSET__assets_images_palette_ase);
+		type.set ("assets/images/palette.ase", AssetType.BINARY);
 		className.set ("assets/images/ship.png", __ASSET__assets_images_ship_png);
 		type.set ("assets/images/ship.png", AssetType.IMAGE);
+		className.set ("assets/images/warning.png", __ASSET__assets_images_warning_png);
+		type.set ("assets/images/warning.png", AssetType.IMAGE);
+		className.set ("assets/images/dorito.ase", __ASSET__assets_images_dorito_ase);
+		type.set ("assets/images/dorito.ase", AssetType.BINARY);
+		className.set ("assets/images/poof1.ase", __ASSET__assets_images_poof1_ase);
+		type.set ("assets/images/poof1.ase", AssetType.BINARY);
+		className.set ("assets/images/box.ase", __ASSET__assets_images_box_ase);
+		type.set ("assets/images/box.ase", AssetType.BINARY);
+		className.set ("assets/images/poof1.png", __ASSET__assets_images_poof1_png);
+		type.set ("assets/images/poof1.png", AssetType.IMAGE);
 		className.set ("assets/data/data-goes-here.txt", __ASSET__assets_data_data_goes_here_txt);
 		type.set ("assets/data/data-goes-here.txt", AssetType.TEXT);
 		className.set ("assets/sounds/sounds-go-here.txt", __ASSET__assets_sounds_sounds_go_here_txt);
@@ -97,11 +130,31 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#elseif html5
 		
 		var id;
+		id = "assets/images/bg.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/flag.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/images/images-go-here.txt";
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
+		id = "assets/images/indicator.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/images/tracks.ase";
+		path.set (id, id);
+		
+		type.set (id, AssetType.BINARY);
+		id = "assets/images/ship.ase";
+		path.set (id, id);
+		
+		type.set (id, AssetType.BINARY);
+		id = "assets/images/indicator.ase";
 		path.set (id, id);
 		
 		type.set (id, AssetType.BINARY);
@@ -109,7 +162,31 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
+		id = "assets/images/palette.ase";
+		path.set (id, id);
+		
+		type.set (id, AssetType.BINARY);
 		id = "assets/images/ship.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/warning.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/dorito.ase";
+		path.set (id, id);
+		
+		type.set (id, AssetType.BINARY);
+		id = "assets/images/poof1.ase";
+		path.set (id, id);
+		
+		type.set (id, AssetType.BINARY);
+		id = "assets/images/box.ase";
+		path.set (id, id);
+		
+		type.set (id, AssetType.BINARY);
+		id = "assets/images/poof1.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -163,17 +240,50 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		var useManifest = false;
 		
+		className.set ("assets/images/bg.png", __ASSET__assets_images_bg_png);
+		type.set ("assets/images/bg.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/flag.png", __ASSET__assets_images_flag_png);
+		type.set ("assets/images/flag.png", AssetType.IMAGE);
+		
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
 		type.set ("assets/images/images-go-here.txt", AssetType.TEXT);
+		
+		className.set ("assets/images/indicator.png", __ASSET__assets_images_indicator_png);
+		type.set ("assets/images/indicator.png", AssetType.IMAGE);
 		
 		className.set ("assets/images/tracks.ase", __ASSET__assets_images_tracks_ase);
 		type.set ("assets/images/tracks.ase", AssetType.BINARY);
 		
+		className.set ("assets/images/ship.ase", __ASSET__assets_images_ship_ase);
+		type.set ("assets/images/ship.ase", AssetType.BINARY);
+		
+		className.set ("assets/images/indicator.ase", __ASSET__assets_images_indicator_ase);
+		type.set ("assets/images/indicator.ase", AssetType.BINARY);
+		
 		className.set ("assets/images/tracks.png", __ASSET__assets_images_tracks_png);
 		type.set ("assets/images/tracks.png", AssetType.IMAGE);
 		
+		className.set ("assets/images/palette.ase", __ASSET__assets_images_palette_ase);
+		type.set ("assets/images/palette.ase", AssetType.BINARY);
+		
 		className.set ("assets/images/ship.png", __ASSET__assets_images_ship_png);
 		type.set ("assets/images/ship.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/warning.png", __ASSET__assets_images_warning_png);
+		type.set ("assets/images/warning.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/dorito.ase", __ASSET__assets_images_dorito_ase);
+		type.set ("assets/images/dorito.ase", AssetType.BINARY);
+		
+		className.set ("assets/images/poof1.ase", __ASSET__assets_images_poof1_ase);
+		type.set ("assets/images/poof1.ase", AssetType.BINARY);
+		
+		className.set ("assets/images/box.ase", __ASSET__assets_images_box_ase);
+		type.set ("assets/images/box.ase", AssetType.BINARY);
+		
+		className.set ("assets/images/poof1.png", __ASSET__assets_images_poof1_png);
+		type.set ("assets/images/poof1.png", AssetType.IMAGE);
 		
 		className.set ("assets/data/data-goes-here.txt", __ASSET__assets_data_data_goes_here_txt);
 		type.set ("assets/data/data-goes-here.txt", AssetType.TEXT);
@@ -843,10 +953,21 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if !display
 #if flash
 
+@:keep @:bind #if display private #end class __ASSET__assets_images_bg_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_flag_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_images_go_here_txt extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_images_indicator_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tracks_ase extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_images_ship_ase extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_images_indicator_ase extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tracks_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_palette_ase extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_images_ship_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_warning_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_dorito_ase extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_images_poof1_ase extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_images_box_ase extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_images_poof1_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_data_data_goes_here_txt extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_sounds_go_here_txt extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_music_music_goes_here_txt extends flash.utils.ByteArray { }
@@ -858,6 +979,17 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 #elseif html5
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -880,10 +1012,21 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if (windows || mac || linux || cpp)
 
 
+@:image("assets/images/bg.png") #if display private #end class __ASSET__assets_images_bg_png extends lime.graphics.Image {}
+@:image("assets/images/flag.png") #if display private #end class __ASSET__assets_images_flag_png extends lime.graphics.Image {}
 @:file("assets/images/images-go-here.txt") #if display private #end class __ASSET__assets_images_images_go_here_txt extends lime.utils.Bytes {}
+@:image("assets/images/indicator.png") #if display private #end class __ASSET__assets_images_indicator_png extends lime.graphics.Image {}
 @:file("assets/images/tracks.ase") #if display private #end class __ASSET__assets_images_tracks_ase extends lime.utils.Bytes {}
+@:file("assets/images/ship.ase") #if display private #end class __ASSET__assets_images_ship_ase extends lime.utils.Bytes {}
+@:file("assets/images/indicator.ase") #if display private #end class __ASSET__assets_images_indicator_ase extends lime.utils.Bytes {}
 @:image("assets/images/tracks.png") #if display private #end class __ASSET__assets_images_tracks_png extends lime.graphics.Image {}
+@:file("assets/images/palette.ase") #if display private #end class __ASSET__assets_images_palette_ase extends lime.utils.Bytes {}
 @:image("assets/images/ship.png") #if display private #end class __ASSET__assets_images_ship_png extends lime.graphics.Image {}
+@:image("assets/images/warning.png") #if display private #end class __ASSET__assets_images_warning_png extends lime.graphics.Image {}
+@:file("assets/images/dorito.ase") #if display private #end class __ASSET__assets_images_dorito_ase extends lime.utils.Bytes {}
+@:file("assets/images/poof1.ase") #if display private #end class __ASSET__assets_images_poof1_ase extends lime.utils.Bytes {}
+@:file("assets/images/box.ase") #if display private #end class __ASSET__assets_images_box_ase extends lime.utils.Bytes {}
+@:image("assets/images/poof1.png") #if display private #end class __ASSET__assets_images_poof1_png extends lime.graphics.Image {}
 @:file("assets/data/data-goes-here.txt") #if display private #end class __ASSET__assets_data_data_goes_here_txt extends lime.utils.Bytes {}
 @:file("assets/sounds/sounds-go-here.txt") #if display private #end class __ASSET__assets_sounds_sounds_go_here_txt extends lime.utils.Bytes {}
 @:file("assets/music/music-goes-here.txt") #if display private #end class __ASSET__assets_music_music_goes_here_txt extends lime.utils.Bytes {}

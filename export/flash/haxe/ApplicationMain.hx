@@ -30,11 +30,31 @@ class ApplicationMain {
 		var types = [];
 		
 		
+		urls.push ("assets/images/bg.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/flag.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/images-go-here.txt");
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
+		urls.push ("assets/images/indicator.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/tracks.ase");
+		types.push (lime.Assets.AssetType.BINARY);
+		
+		
+		urls.push ("assets/images/ship.ase");
+		types.push (lime.Assets.AssetType.BINARY);
+		
+		
+		urls.push ("assets/images/indicator.ase");
 		types.push (lime.Assets.AssetType.BINARY);
 		
 		
@@ -42,7 +62,31 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/palette.ase");
+		types.push (lime.Assets.AssetType.BINARY);
+		
+		
 		urls.push ("assets/images/ship.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/warning.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/dorito.ase");
+		types.push (lime.Assets.AssetType.BINARY);
+		
+		
+		urls.push ("assets/images/poof1.ase");
+		types.push (lime.Assets.AssetType.BINARY);
+		
+		
+		urls.push ("assets/images/box.ase");
+		types.push (lime.Assets.AssetType.BINARY);
+		
+		
+		urls.push ("assets/images/poof1.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -139,7 +183,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "23",
+			build: "172",
 			company: "HaxeFlixel",
 			file: "OneShiftTwoShift",
 			fps: 60,
@@ -163,7 +207,7 @@ class ApplicationMain {
 					stencilBuffer: true,
 					title: "OneShiftTwoShift",
 					vsync: true,
-					width: 288,
+					width: 512,
 					x: null,
 					y: null
 				},
@@ -181,7 +225,7 @@ class ApplicationMain {
 		
 		#if (js && html5)
 		#if (munit || utest)
-		openfl.Lib.embed (null, 288, 512, "000000");
+		openfl.Lib.embed (null, 512, 512, "000000");
 		#end
 		#else
 		create ();

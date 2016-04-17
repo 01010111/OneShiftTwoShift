@@ -1,0 +1,74 @@
+package;
+
+class TrackInfo
+{
+	public static var tracks:Array<TrackEnds> = 
+	[
+		{
+			top:0x010,
+			bottom:0x010
+		},
+		{
+			top:0x010,
+			bottom:0x010
+		},
+		{
+			top:0x010,
+			bottom:0x010
+		},
+		{
+			top:0x101,
+			bottom:0x010
+		},
+		{
+			top:0x010,
+			bottom:0x101
+		},
+		{
+			top:0x101,
+			bottom:0x101
+		},
+		{
+			top:0x100,
+			bottom:0x010
+		},
+		{
+			top:0x001,
+			bottom:0x010
+		},
+		{
+			top:0x010,
+			bottom:0x100
+		},
+		{
+			top:0x010,
+			bottom:0x001
+		},
+		{
+			top:0x100,
+			bottom:0x001
+		},
+		{
+			top:0x001,
+			bottom:0x100
+		},
+		{
+			top:0x010,
+			bottom:0x010
+		},
+		{
+			top:0x010,
+			bottom:0x010
+		},
+		{
+			top:0x010,
+			bottom:0x010
+		},
+	];
+}
+
+typedef TrackEnds =
+{
+	top:Int,
+	bottom:Int
+}

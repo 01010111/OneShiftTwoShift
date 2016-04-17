@@ -80,7 +80,7 @@ class NMEPreloader extends Sprite {
 	
 	public function getWidth ():Float {
 		
-		var width = 288;
+		var width = 512;
 		
 		if (width > 0) {
 			
