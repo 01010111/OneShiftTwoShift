@@ -9,32 +9,40 @@ class Poof extends FlxTypedGroup<PoofPart>
 {
 
 	var counter:Int = 0;
+	var limit:Bool;
 
-	public function new(_amt:Int)
+	public function new(_amt:Int, _limit:Bool = true)
 	{
 		super();
 		for(i in 0..._amt)
 			add(new PoofPart());
-		PlayState.i.layer1.add(this);
+		PlayState.i.layer2.add(this);
+		limit = _limit;
 	}
 
-	public function fire(_p:FlxPoint)
+	public function fire(_p:FlxPoint, _m:Bool = true)
 	{
-		if (getFirstAvailable() != null && counter == 0) getFirstAvailable().fire(_p);
+		if (getFirstAvailable() != null && counter == 0) getFirstAvailable().fire(_p, _m);
 	}
 
 	override public function update(e:Float):Void
 	{
 		super.update(e);
-		if (counter == 0)
-			counter = ZMath.randomRangeInt(3,9);
-		else 
-			counter--;
+		if (limit)
+		{
+			if (counter == 0)
+				counter = ZMath.randomRangeInt(3,9);
+			else 
+				counter--;
+		}
 	}
 }
 
 class PoofPart extends FlxSprite
 {
+
+	var move_real:Bool;
+
 	public function new()
 	{
 		exists = false;
@@ -44,7 +52,7 @@ class PoofPart extends FlxSprite
 		offset.set(8,8);
 	}
 
-	public function fire(_p:FlxPoint):Void
+	public function fire(_p:FlxPoint, _m:Bool):Void
 	{
 		angle = 90 * ZMath.randomRangeInt(0, 3);
 		animation.play("play");
@@ -52,12 +60,13 @@ class PoofPart extends FlxSprite
 		var _s = ZMath.randomRange(1,1.5);
 		scale.set(_s,_s);
 		exists = true;
+		move_real = _m;
 	}
 
 	override public function update(e:Float):Void
 	{
 		super.update(e);
 		if (animation.finished) exists = false;
-		velocity.y = PlayState.i.real_speed;
+		velocity.y = move_real ? PlayState.i.real_speed : 0;
 	}
 }

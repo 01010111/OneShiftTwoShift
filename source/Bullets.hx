@@ -41,10 +41,11 @@ class Bullet extends FlxSprite
 	public function fire(_p:FlxPoint, _v:FlxPoint):Void
 	{
 		angle = ZMath.angleFromVelocity(_v.x, _v.y) + 90;
-		scale.set(1, 1);
+		scale.set(2, 1);
 		setPosition(_p.x, _p.y);
 		velocity.set(_v.x, _v.y);
 		exists = true;
+		alpha = 0;
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -52,8 +53,9 @@ class Bullet extends FlxSprite
 		if (y < -16) exists = false;
 		if (exists) 
 		{
-			scale.x *= 1.02;
-			scale.y *= 1.1;
+			scale.x *= 1.01;
+			scale.y *= 1.05;
+			alpha += (1 - alpha) * 0.5;
 		}
 		super.update(elapsed);
 	}

@@ -4,6 +4,74 @@
 		"selected_items":
 		[
 			[
+				"spawn_",
+				"spawn_missile(  )	Void"
+			],
+			[
+				"by",
+				"byY(...)	Int"
+			],
+			[
+				"randomr",
+				"randomRange(...)	Float"
+			],
+			[
+				"ran",
+				"randomRange(...)	Float"
+			],
+			[
+				"barrier",
+				"barrier_arrays"
+			],
+			[
+				"add",
+				"add_time(...)	Void"
+			],
+			[
+				"temp",
+				"temp_speed	Float"
+			],
+			[
+				"x",
+				"X	Bool"
+			],
+			[
+				"randomran",
+				"randomRangeInt(...)	Int"
+			],
+			[
+				"rand",
+				"randomRangeInt(...)	Int"
+			],
+			[
+				"TrackIn",
+				"TrackInfo	class"
+			],
+			[
+				"frame",
+				"frameIndex"
+			],
+			[
+				"TrackEnds",
+				"TrackEnds	class"
+			],
+			[
+				"int",
+				"Int	class"
+			],
+			[
+				"blend",
+				"BlendMode	class"
+			],
+			[
+				"up",
+				"DPAD_UP	Bool"
+			],
+			[
+				"po",
+				"containsPoint(...)	Bool"
+			],
+			[
 				"get",
 				"getPixel32( x : Int , y : Int )	Int"
 			],
@@ -28,19 +96,75 @@
 	"buffers":
 	[
 		{
-			"file": "source/Main.hx",
+			"file": "source/PlayState.hx",
 			"settings":
 			{
-				"buffer_size": 231,
+				"buffer_size": 6256,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "source/PlayState.hx",
+			"file": "source/Missile.hx",
 			"settings":
 			{
-				"buffer_size": 2207,
-				"line_ending": "Windows"
+				"buffer_size": 733,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/Poof.hx",
+			"settings":
+			{
+				"buffer_size": 1352,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/Warnings.hx",
+			"settings":
+			{
+				"buffer_size": 721,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/Barriers.hx",
+			"settings":
+			{
+				"buffer_size": 1269,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/Ship.hx",
+			"settings":
+			{
+				"buffer_size": 2716,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/Doritos.hx",
+			"settings":
+			{
+				"buffer_size": 1393,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/Copter.hx",
+			"settings":
+			{
+				"buffer_size": 955,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/usr/lib/haxe/lib/zerolib/git/zerolib/ZSprite.hx",
+			"settings":
+			{
+				"buffer_size": 2008,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -79,17 +203,29 @@
 		"/home/zero/OneShiftTwoShift",
 		"/home/zero/OneShiftTwoShift/assets",
 		"/home/zero/OneShiftTwoShift/assets/images",
-		"/home/zero/OneShiftTwoShift/source"
+		"/home/zero/OneShiftTwoShift/source",
+		"/usr/lib/haxe/lib/zerolib/git",
+		"/usr/lib/haxe/lib/zerolib/git/zerolib"
 	],
 	"file_history":
 	[
-		"/home/zero/OneShiftTwoShift/assets/images/tracks.png",
+		"/home/zero/OneShiftTwoShift/source/Ship.hx",
+		"/home/zero/OneShiftTwoShift/source/Barriers.hx",
+		"/home/zero/OneShiftTwoShift/source/Bullets.hx",
+		"/usr/lib/haxe/lib/zerolib/git/zerolib/ZCountDown.hx",
+		"/home/zero/OneShiftTwoShift/source/PlayState.hx",
 		"/home/zero/OneShiftTwoShift/Project.xml",
+		"/home/zero/OneShiftTwoShift/source/Main.hx",
+		"/home/zero/OneShiftTwoShift/source/TrackInfo.hx",
+		"/home/zero/OneShiftTwoShift/source/Poof.hx",
+		"/home/zero/OneShiftTwoShift/source/Track.hx",
+		"/home/zero/OneShiftTwoShift/.git/.gitignore",
+		"/home/zero/OneShiftTwoShift/assets/images/tracks.png",
 		"/home/zero/OneShiftTwoShift/OneShiftTwoShift.sublime-project"
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -103,6 +239,17 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"());\n",
+			"layer2",
+			"]);\n",
+			"1",
+			"SPACE",
+			"255",
+			");\n",
+			"512",
+			"SPACE",
+			"FlxG.keys.pressed",
+			"288"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -120,53 +267,113 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "source/Main.hx",
+					"file": "source/PlayState.hx",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 231,
+						"buffer_size": 6256,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								226,
-								226
+								1624,
+								1624
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 232.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "source/Missile.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 733,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								626,
+								626
 							]
 						],
 						"settings":
 						{
 							"haxe-build-id": 0,
 							"syntax": "Packages/Haxe/Haxe.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 306.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "source/Poof.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1352,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								266,
+								266
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "source/PlayState.hx",
+					"buffer": 3,
+					"file": "source/Warnings.hx",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2207,
+						"buffer_size": 721,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1040,
-								1040
+								607,
+								607
 							]
 						],
 						"settings":
@@ -175,10 +382,158 @@
 							"syntax": "Packages/Haxe/Haxe.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 765.0,
+						"translation.y": 323.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "source/Barriers.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1269,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								928,
+								928
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 459.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "source/Ship.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2716,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								288,
+								288
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 108.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "source/Doritos.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1393,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								351,
+								351
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 204.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "source/Copter.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 955,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								931,
+								931
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage"
+						},
+						"translation.x": -0.0,
+						"translation.y": 306.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/usr/lib/haxe/lib/zerolib/git/zerolib/ZSprite.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2008,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								788,
+								788
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 459.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -186,11 +541,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 25.0
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{
@@ -227,7 +582,7 @@
 	"project": "OneShiftTwoShift.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 46.0
 	},
 	"save_all_on_build": true,
 	"select_file":

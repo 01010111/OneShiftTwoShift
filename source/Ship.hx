@@ -3,16 +3,20 @@ package;
 import flixel.math.FlxMath;
 import flixel.FlxSprite;
 import flixel.FlxG;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxAxes;
+import flixel.util.FlxTimer;
 import zerolib.ZMath;
 
 class Ship extends FlxSprite
 {
 
 	public var poofs:Poof;
-	var bullets:Bullets;
+	public var bullets:Bullets;
 	var accel:Float = 1200;
 	public var speed:Float = 250;
+	var doritos:Doritos;
 
 	public function new()
 	{
@@ -27,68 +31,102 @@ class Ship extends FlxSprite
 		offset.set(12, 16);
 		poofs = new Poof(8);
 		bullets = new Bullets(16);
+		doritos = new Doritos(48);
 		health = 100;
 	}
 
 	var temp_speed:Float = 350;
 	var bullet_timer:Int = 0;
 	var bullet_alt:Bool = true;
+	var in_control:Bool = true;
 
 	override public function update(e:Float):Void
 	{
 		acceleration.set();
 
-		//speed = FlxG.keys.pressed.X ? 400 : 180;
-
-		if (FlxG.keys.pressed.X)
+		if (in_control)
 		{
-			speed = temp_speed;
-			temp_speed = ZMath.clamp(temp_speed *= 1.005, 0, 425);
-		}
-		else 
-		{
-			speed = 200;
-			temp_speed += (350 - temp_speed) * 0.02;
-			if (FlxG.keys.pressed.C)
+			if (FlxG.keys.pressed.X)
 			{
-				if (bullet_timer == 0)
+				speed = temp_speed;
+				temp_speed = ZMath.clamp(temp_speed *= 1.005, 0, 425);
+			}
+			else 
+			{
+				speed = 200;
+				temp_speed += (350 - temp_speed) * 0.02;
+				if (FlxG.keys.pressed.C)
 				{
-					bullet_timer = 3;
-					var _b_p = getMidpoint();
-					_b_p.x += bullet_alt ? -6 : 4;
-					_b_p.y -= 4;
-					bullet_alt = !bullet_alt;
-					bullets.fire(_b_p, ZMath.velocityFromAngle(angle - 90, 600));
+					if (bullet_timer == 0)
+						shoot();
+					else
+						bullet_timer--;
 				}
 				else
-					bullet_timer--;
+					bullet_timer = 0;
 			}
-			else
-				bullet_timer = 0;
+
+			if (FlxG.keys.pressed.UP) acceleration.y -= accel;
+			if (FlxG.keys.pressed.DOWN) 
+			{
+				acceleration.y += accel;
+				if (!FlxG.keys.pressed.X) 
+					speed *= 75/200;
+			}	
+			if (FlxG.keys.pressed.LEFT) acceleration.x -= accel;
+			if (FlxG.keys.pressed.RIGHT) acceleration.x += accel;
+
+			var _anim = FlxG.keys.pressed.X ? "fast" : "slow";
+			animation.play(_anim); 
+
+			angle = velocity.x * 0.075;
 		}
-
-		if (FlxG.keys.pressed.UP) acceleration.y -= accel;
-		if (FlxG.keys.pressed.DOWN) 
+		else
 		{
-			acceleration.y += accel;
-			if (!FlxG.keys.pressed.X) 
-				speed *= 75/200;
-		}	
-		if (FlxG.keys.pressed.LEFT) acceleration.x -= accel;
-		if (FlxG.keys.pressed.RIGHT) acceleration.x += accel;
-
-		var _anim = FlxG.keys.pressed.X ? "fast" : "slow";
-		animation.play(_anim); 
-
-		var _m = getMidpoint();
-		if (_m.x <= 0 && velocity.x < 0 || _m.x >= FlxG.width && velocity.x > 0)
-			velocity.x = 0;
-		if (_m.y <= 0 && velocity.y < 0 || _m.y >= FlxG.height && velocity.y > 0)
-			velocity.y = 0;
-
-		angle = velocity.x * 0.075;
-
+			speed = 0;
+		}
+	
 		super.update(e);
+	}
+
+	function shoot():Void
+	{
+		bullet_timer = 3;
+		var _b_p = getMidpoint();
+		_b_p.x += bullet_alt ? -7 : 5;
+		_b_p.y -= 4;
+		bullet_alt = !bullet_alt;
+		bullets.fire(_b_p, ZMath.velocityFromAngle(angle - 90, 600));
+		FlxG.camera.shake(0.005, 0.025);
+	}
+
+	override public function kill():Void
+	{
+		if (exists)
+		{
+			PlayState.i.timer.pause();
+			super.kill();
+		}
+	}
+
+	override public function hurt(_d:Float):Void
+	{
+		if (_d < 5 && Math.random() > 0.75) 
+			doritos.fire(getMidpoint(), Std.int(_d), true);
+		else if (_d >= 5)
+		{
+			doritos.fire(getMidpoint(), Std.int(_d), true);
+			in_control = false;
+			velocity.set(ZMath.randomRange(-10,10), 100);
+			var _a = angle;
+			angle -= 360 * 2;
+			FlxTween.tween(this, {angle:_a}, 0.75, {ease:FlxEase.expoOut});
+			new FlxTimer().start(0.75).onComplete = function(t:FlxTimer):Void
+			{
+				in_control = true;
+			}
+		}
+		super.hurt(_d);
 	}
 
 }
