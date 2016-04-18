@@ -15,6 +15,8 @@ class Copter extends FlxSprite
 	var doritos:Doritos;
 	var poofs:Poof;
 	var explosions:Explosions;
+	var bullets:EnemyBullets;
+	var a_offset:Float;
 
 	public function new()
 	{
@@ -33,16 +35,45 @@ class Copter extends FlxSprite
 		doritos = new Doritos(8);
 		poofs = new Poof(8, false);
 		explosions = new Explosions(4);
+		bullets = new EnemyBullets(5);
 
 		allowCollisions = 0x0000;
 		scale.set(2,2);
-		alpha = 0.5;
-
-		FlxTween.tween(this,{alpha:1},4,{ease:FlxEase.expoIn});
+		alpha = 1;
+		color = 0xff101010;
+		
+		a_offset = 60;
+		FlxTween.tween(this, {a_offset:120}, 1.5, {type:FlxTween.PINGPONG, ease:FlxEase.sineInOut});
+		
+		FlxTween.color(this, 4, 0xff101010, 0xffffffff, {ease:FlxEase.expoIn});
+		//FlxTween.tween(this,{alpha:1, color:0xffffffff},4,{ease:FlxEase.expoIn});
 		FlxTween.tween(scale,{x:1,y:1},4,{ease:FlxEase.expoIn}).onComplete = function(t:FlxTween):Void
 		{
 			allowCollisions = 0x1111;
+			new FlxTimer().start(1, shoot);
 		}
+	}
+	
+	function shoot(?t:FlxTimer):Void
+	{
+		if (exists)
+		{
+			for (i in 0...5)
+			{
+				new FlxTimer().start(i * 0.25).onComplete = function(t:FlxTimer):Void
+				{
+					if (exists)
+						really_shoot();
+				}
+			}
+			new FlxTimer().start(4, shoot);
+		}
+	}
+	
+	function really_shoot():Void
+	{
+		FlxG.camera.shake(0.005, 0.025);
+		bullets.fire(getMidpoint(), a_offset);
 	}
 
 	function set_target()
@@ -54,7 +85,7 @@ class Copter extends FlxSprite
 	{
 		var _ac = ZMath.velocityFromAngle(ZMath.angleBetween(getMidpoint(), target), ZMath.distance(getMidpoint(), target));
 		acceleration.set(_ac.x, _ac.y);
-
+		angle = velocity.x * 0.075;
 		super.update(e);
 	}
 
@@ -70,9 +101,11 @@ class Copter extends FlxSprite
 	{
 		for (i in 0...4)
 		{
-			new FlxTimer().start(i * 0.1).onComplete = function (t:FlxTimer):Void
+			new FlxTimer().start(i * 0.2).onComplete = function (t:FlxTimer):Void
 			{
-				explosions.fire(getMidpoint());
+				var m = getMidpoint();
+				m.set(m.x + ZMath.randomRange( -10, 10), m.y + ZMath.randomRange( -10, 10));
+				explosions.fire(m);
 			}
 		}
 		new FlxTimer().start(2).onComplete = function(t:FlxTimer):Void
@@ -80,6 +113,7 @@ class Copter extends FlxSprite
 			poofs.kill();
 			doritos.kill();
 			explosions.kill();
+			bullets.kill();
 		}
 		super.kill();
 	}

@@ -3,6 +3,7 @@ package ;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
+import zerolib.ZMath;
 
 class Explosions extends FlxTypedGroup<Explosion>
 {
@@ -37,10 +38,11 @@ class Explosion extends FlxSprite
 	public function fire(_p:FlxPoint):Void
 	{
 		setPosition(_p.x, _p.y);
-		var _s = Math.random() + 1;
+		var _s = Math.random() * 0.5 + 1;
 		scale.set(_s,_s);
 		animation.play("play");
 		exists = true;
+		angle = 90 * ZMath.randomRangeInt(0, 3);
 	}
 
 	override public function update(e:Float):Void

@@ -17,6 +17,7 @@ class Ship extends FlxSprite
 	var accel:Float = 1200;
 	public var speed:Float = 250;
 	var doritos:Doritos;
+	var explosions:Explosions;
 
 	public function new()
 	{
@@ -32,6 +33,7 @@ class Ship extends FlxSprite
 		poofs = new Poof(8);
 		bullets = new Bullets(16);
 		doritos = new Doritos(48);
+		explosions = new Explosions(6);
 		health = 100;
 	}
 
@@ -104,6 +106,15 @@ class Ship extends FlxSprite
 	{
 		if (exists)
 		{
+			for (i in 0...6)
+			{
+				new FlxTimer().start(i * 0.1).onComplete = function(t:FlxTimer):Void
+				{
+					var m = getMidpoint();
+					m.set(m.x + ZMath.randomRange( -20, 20), m.y + ZMath.randomRange( -40, 10));
+					explosions.fire(m);
+				}
+			}
 			PlayState.i.timer.pause();
 			super.kill();
 		}
@@ -117,6 +128,7 @@ class Ship extends FlxSprite
 		{
 			doritos.fire(getMidpoint(), Std.int(_d), true);
 			in_control = false;
+			animation.play("slow");
 			velocity.set(ZMath.randomRange(-10,10), 100);
 			var _a = angle;
 			angle -= 360 * 2;

@@ -29,6 +29,8 @@ class Bullets extends FlxTypedGroup<Bullet>
 class Bullet extends FlxSprite
 {
 	
+	var doritos:Doritos;
+	
 	public function new ()
 	{
 		super(0, 0, "assets/images/shot.png");
@@ -36,6 +38,7 @@ class Bullet extends FlxSprite
 		setSize(2, 2);
 		offset.set(1, 1);
 		//blend = BlendMode.SCREEN;
+		doritos = new Doritos(1);
 	}
 	
 	public function fire(_p:FlxPoint, _v:FlxPoint):Void
@@ -50,7 +53,7 @@ class Bullet extends FlxSprite
 	
 	override public function update(elapsed:Float):Void 
 	{
-		if (y < -16) exists = false;
+		if (y < -16) kill();
 		if (exists) 
 		{
 			scale.x *= 1.01;
@@ -58,6 +61,13 @@ class Bullet extends FlxSprite
 			alpha += (1 - alpha) * 0.5;
 		}
 		super.update(elapsed);
+	}
+	
+	override public function kill():Void 
+	{
+		if (y > 0)
+			doritos.fire(getMidpoint(), 1);
+		super.kill();
 	}
 	
 }

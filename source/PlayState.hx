@@ -24,6 +24,7 @@ import zerolib.ZMath;
 import zerolib.ZCountDown;
 import Barriers.Barrier;
 import Bullets.Bullet;
+import EnemyBullets.EnemyBullet;
 
 class PlayState extends FlxState
 {
@@ -48,6 +49,7 @@ class PlayState extends FlxState
 	var barriers:Barriers;
 	public var missiles:FlxTypedGroup<Missile>;
 	public var copters:FlxTypedGroup<Copter>;
+	public var enemy_bullets:FlxTypedGroup<EnemyBullet>;
 	var red_box:FlxSprite;
 	var warnings:Warnings;
 	public var sprite_group:FlxSpriteGroup;
@@ -73,6 +75,7 @@ class PlayState extends FlxState
 		layer3 = new FlxSpriteGroup();
 		missiles = new FlxTypedGroup();
 		copters = new FlxTypedGroup();
+		enemy_bullets = new FlxTypedGroup();
 
 		add(layer0);
 
@@ -130,7 +133,7 @@ class PlayState extends FlxState
 
 		FlxG.mouse.visible = false;
 
-		new FlxTimer().start(5, spawn_obstacle, 0);
+		new FlxTimer().start(7, spawn_obstacle, 0);
 	}
 
 	function spawn_obstacle(?t:FlxTimer):Void
@@ -209,11 +212,18 @@ class PlayState extends FlxState
 
 		FlxG.overlap(ship, barriers, barrier_callback);
 		FlxG.overlap(ship.bullets, copters, bullet_hit_copter);
+		FlxG.overlap(ship, enemy_bullets, bullet_hit_player);
 
 		sprite_group.sort(FlxSort.byY, FlxSort.ASCENDING);
 		layer3.sort(FlxSort.byY, FlxSort.ASCENDING);
 
 		goal_stuff();
+	}
+	
+	function bullet_hit_player(_s:Ship, _b:EnemyBullet):Void
+	{
+		_b.kill();
+		_s.hurt(5);
 	}
 
 	function bullet_hit_copter(_b:Bullet, _c:Copter):Void
