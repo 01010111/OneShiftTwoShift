@@ -25,7 +25,6 @@ class Ship extends FlxSprite
 		loadGraphic("assets/images/ship.png", true, 32, 32);
 		animation.add("slow", [0,1,2,3], 48);
 		animation.add("fast", [4,5,6,7], 30);
-		screenCenter(FlxAxes.X);
 		maxVelocity.set(150, 75);
 		drag.set(accel, accel);
 		setSize(8, 1);
@@ -35,12 +34,13 @@ class Ship extends FlxSprite
 		doritos = new Doritos(48);
 		explosions = new Explosions(6);
 		health = 100;
+		screenCenter(FlxAxes.X);
 	}
 
 	var temp_speed:Float = 350;
 	var bullet_timer:Int = 0;
 	var bullet_alt:Bool = true;
-	var in_control:Bool = true;
+	public var in_control:Bool = true;
 
 	override public function update(e:Float):Void
 	{
@@ -77,7 +77,12 @@ class Ship extends FlxSprite
 			}	
 			if (FlxG.keys.pressed.LEFT) acceleration.x -= accel;
 			if (FlxG.keys.pressed.RIGHT) acceleration.x += accel;
-
+			
+			if (FlxG.keys.justPressed.X)
+				FlxG.sound.play("boostin", 0.5);
+			else if (FlxG.keys.justReleased.X)
+				FlxG.sound.play("boostout", 0.5);
+			
 			var _anim = FlxG.keys.pressed.X ? "fast" : "slow";
 			animation.play(_anim); 
 
@@ -104,8 +109,9 @@ class Ship extends FlxSprite
 
 	override public function kill():Void
 	{
-		if (exists)
+		if (alive)
 		{
+			PlayState.i.player_die();
 			for (i in 0...6)
 			{
 				new FlxTimer().start(i * 0.1).onComplete = function(t:FlxTimer):Void

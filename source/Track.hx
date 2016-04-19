@@ -9,7 +9,7 @@ import flixel.math.FlxPoint;
 class Track extends FlxSprite
 {
 
-	var speed:Float = 500;
+	var speed:Float = 0;
 	public var ends:TrackEnds;
 
 	public function new(y:Float, f:Int)

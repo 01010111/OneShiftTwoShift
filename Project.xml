@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="OneShiftTwoShift" file="OneShiftTwoShift" main="Main" version="0.0.1" company="HaxeFlixel" />
+	<app title="OneShiftTwoShift" file="2ShiftDrift" main="Main" version="0.0.1" company="01010111" />
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -29,7 +29,43 @@
 
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
-	<assets path="assets" />
+	<assets path="assets/images" embed="true" />
+	
+	<assets path="assets/sounds/flash" if="flash" embed="true">
+		<sound path="boost_in.mp3" id="boostin" />
+		<sound path="boost_out.mp3" id="boostout" />
+		<sound path="explode.mp3" id="explode" />
+		<sound path="explosion.mp3" id="explosion" />
+		<sound path="hit.mp3" id="hit" />
+		<sound path="hit1.mp3" id="shot1" />
+		<sound path="hit2.mp3" id="shot2" />
+		<sound path="hit3.mp3" id="shot3" />
+		<sound path="hit4.mp3" id="shot4" />
+		<sound path="hit5.mp3" id="shot5" />
+		<sound path="ko.mp3" id="shoot" />
+		<sound path="puff.mp3" id="puff" />
+		<sound path="yes.mp3" id="yes" />
+		<sound path="alert.mp3" id="alert" />
+		<sound path="preApocolypticWastelandd.mp3" id="tune" />
+	</assets>
+
+	<assets path="assets/sounds/cpp" unless="flash" embed="true">
+		<sound path="boost_in.ogg" id="boostin" />
+		<sound path="boost_out.ogg" id="boostout" />
+		<sound path="explode.ogg" id="explode" />
+		<sound path="explosion.ogg" id="explosion" />
+		<sound path="hit.ogg" id="hit" />
+		<sound path="hit1.ogg" id="shot1" />
+		<sound path="hit2.ogg" id="shot2" />
+		<sound path="hit3.ogg" id="shot3" />
+		<sound path="hit4.ogg" id="shot4" />
+		<sound path="hit5.ogg" id="shot5" />
+		<sound path="ko.ogg" id="shoot" />
+		<sound path="puff.ogg" id="puff" />
+		<sound path="yes.ogg" id="yes" />
+		<sound path="alert.ogg" id="alert" />
+		<sound path="preApocolypticWastelandd.ogg" id="tune" />
+	</assets>
 
 	<!-- _______________________________ Libraries ______________________________ -->
 

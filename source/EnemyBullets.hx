@@ -1,4 +1,5 @@
 package;
+import flixel.FlxG;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
@@ -45,6 +46,7 @@ class EnemyBullet extends FlxSprite
 		velocity.set(_v.x, _v.y);
 		exists = true;
 		FlxTween.tween(scale, {x:1.3, y:1.3}, 0.1, {type:FlxTween.PINGPONG, ease:FlxEase.sineInOut});
+		FlxG.sound.play("shoot", 0.6);
 	}
 	
 	override public function update(elapsed:Float):Void 

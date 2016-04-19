@@ -11,7 +11,9 @@ import flixel.group.FlxSpriteGroup;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
 import flixel.ui.FlxButton;
@@ -20,6 +22,7 @@ import flixel.util.FlxAxes;
 import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
 import openfl.display.BlendMode;
+import zerolib.ZBitmapText;
 import zerolib.ZMath;
 import zerolib.ZCountDown;
 import Barriers.Barrier;
@@ -32,7 +35,7 @@ class PlayState extends FlxState
 	var ship:Ship;
 	var dolly:FlxObject;
 	var cur_track_pixel:Int;
-	var speed:Float = 500;
+	var speed:Float = 0;
 	public var real_speed:Float = 0;
 	var bg:FlxBackdrop;
 	public var layer0:FlxGroup;
@@ -41,8 +44,8 @@ class PlayState extends FlxState
 	public var layer3:FlxSpriteGroup;
 	var indicator:FlxSprite;
 	var indi_pos:Float;
-	var goal:Float = 1000;
-	var cur_dist:Float = 0;
+	var goal:Float = 1500;
+	public var cur_dist:Float = 0;
 	var indi_map:Array<Float> = new Array();
 	public var timer:ZCountDown;
 	var health_bar:FlxBar;
@@ -53,15 +56,30 @@ class PlayState extends FlxState
 	var red_box:FlxSprite;
 	var warnings:Warnings;
 	public var sprite_group:FlxSpriteGroup;
+	var alerts:Alerts;
+	var text:ZBitmapText;
+	var text_bg:FlxSprite;
+	public var total_dist:Int = 0;
+	var xandc:FlxSprite;
+	var begin:Bool;
+	var title:FlxSprite;
 
 	public static var i:PlayState;
-
+	
+	public function new(_start:Bool = true)
+	{
+		super();
+		begin = _start;
+	}
+	
 	override public function create():Void
 	{
 		super.create();
 		
+		Save.load();
+		
 		#if desktop
-		FlxG.fullscreen = true;
+		//FlxG.fullscreen = true;
 		#end
 		
 		i = this;
@@ -94,7 +112,13 @@ class PlayState extends FlxState
 		add(layer2);
 		add(layer3);
 
-		timer = new ZCountDown(FlxPoint.get(10,FlxG.height - 24),2);
+		alerts = new Alerts();
+		
+		timer = new ZCountDown(FlxPoint.get(10, FlxG.height - 24), 2);
+		timer.callback = function():Void
+		{
+			ship.kill();
+		}
 		add(timer);
 
 		health_bar = new FlxBar(10, FlxG.height - 12, FlxBarFillDirection.LEFT_TO_RIGHT, FlxG.width - 20, 4, ship, "health", 0, 100, true);
@@ -128,27 +152,90 @@ class PlayState extends FlxState
 
 		warnings = new Warnings();
 		add(warnings);
+		
+		text_bg = new FlxSprite(0, FlxG.height - 21 - 12 - 12);
+		text_bg.makeGraphic(FlxG.width, 11, 0xff111111);
+		text_bg.scale.y = 0;
+		add(text_bg);
+		
+		text = new ZBitmapText(0, text_bg.y + 2, " 0123456789mABCDEFGHIJKLMNOPQRSTUVWXYZ:+", FlxPoint.get(6, 8), "assets/images/scoreno.png", FlxTextAlign.CENTER, FlxG.width);
+		add(text);
+		
+		xandc = new FlxSprite(64, FlxG.height - 21 - 12);
+		xandc.loadGraphic("assets/images/xandc.png", true, 128, 11);
+		xandc.animation.add("play", [0, 0, 0, 0, 1, 2, 2]);
+		xandc.animation.play("play");
+		add(xandc);
 
-		FlxG.watch.add(this, "cur_track_pixel", "P:");
-
+		if (begin)
+		{
+			can_start = true;
+			ship.in_control = false;
+			timer.pause();
+			FlxG.camera.fade(0xff000000, 0.5, true);
+			title = new FlxSprite(0, 80, "assets/images/title.png");
+			title.alpha = 0;
+			FlxTween.tween(title, {alpha:1, y:0}, 0.3);
+			add(title);
+			if (Save.hi > 0) bring_text_in("HISCORE:" + Save.hi);
+		}
+		else
+		{
+			FlxG.camera.flash(0xffff0050, 0.3);
+			xandc.scale.y = 0;
+			new FlxTimer().start(7, spawn_obstacle, 0);
+						
+		}
+		
 		FlxG.mouse.visible = false;
-
-		new FlxTimer().start(7, spawn_obstacle, 0);
+	}
+	
+	function bring_text_in(_t:String):Void
+	{
+		text.x = FlxG.width;
+		text.text = _t;
+		FlxTween.tween(text_bg.scale, {y:1}, 0.25).onComplete = function(t:FlxTween):Void
+		{
+			FlxTween.tween(text, {x:0}, 0.25, {ease:FlxEase.expoOut});
+		}
+	}
+	
+	function take_text_out():Void
+	{
+		FlxTween.tween(text, {x: -FlxG.width}, 0.25, {ease:FlxEase.expoIn}).onComplete = function(t:FlxTween):Void
+		{
+			FlxTween.tween(text_bg.scale, {y:0}, 0.25);
+		}
 	}
 
 	function spawn_obstacle(?t:FlxTimer):Void
+	{
+		if (ship.alive)
+		{
+			for (i in 0...2)
+					new FlxTimer().start(0.75 * i).onComplete = function (t:FlxTimer):Void { FlxG.sound.play("alert", 0.4);}
+			alert();
+			var i = ZMath.randomRangeInt(0,2);
+			switch(i)
+			{
+				case 0, 1: spawn_blocks();
+				case 2: spawn_copter();
+			}
+		}
+	}
+	
+	function alert(?t:FlxTimer):Void
 	{
 		FlxTween.tween(red_box, {alpha:0.5},0.25).onComplete = function(t:FlxTween):Void
 		{
 			FlxTween.tween(red_box, {alpha:0},0.25);
 		}
-		var i = ZMath.randomRangeInt(0,1);
-		switch(i)
-		{
-			case 0: spawn_blocks();
-			case 1: layer3.add(new Copter());
-			case 3: spawn_missile();
-		}
+	}
+	
+	function spawn_copter():Void
+	{
+		new FlxTimer().start(0.75, alert);
+		layer3.add(new Copter());
 	}
 
 	var barrier_arrays:Array<Array<Int>> = [
@@ -194,50 +281,96 @@ class PlayState extends FlxState
 	{
 		sprite_group.add(new Missile(_i));
 	}
-
+	
+	var poops:Bool = true;
+	
 	override public function update(elapsed:Float):Void
 	{
-		real_speed += (speed - real_speed) * 0.05;
-		speed = ship.speed;
 		super.update(elapsed);
-		for (i in 0...tracks.length)
+		if (can_start)
 		{
-			if (ship.exists && ship.y > tracks[i].y && ship.y < tracks[i].y + 255)
-				check_track(ship, tracks[i]);
-			tracks[i].set_speed(real_speed);
-		}	
-		if (tracks[0].y > FlxG.height) swap_tilemaps();
-		bg.velocity.y = real_speed * 0.5;
-		if (FlxG.keys.justPressed.R) FlxG.resetState();
+			if (FlxG.keys.pressed.X && FlxG.keys.pressed.C && poops)
+			{
+				FlxG.sound.play("yes");
 
-		FlxG.overlap(ship, barriers, barrier_callback);
-		FlxG.overlap(ship.bullets, copters, bullet_hit_copter);
-		FlxG.overlap(ship, enemy_bullets, bullet_hit_player);
+				poops = false;
+				FlxTween.tween(xandc.scale, {y:0}, 0.25);
+				FlxTween.tween(title.scale, {x:0, y:0}, 0.4, {ease:FlxEase.backIn});
+				if (Save.hi > 0) take_text_out();
+				new FlxTimer().start(0.5, start_game);
+			}
+		}
+		else
+		{
+			real_speed += (speed - real_speed) * 0.05;
+			speed = ship.speed;
+			for (i in 0...tracks.length)
+			{
+				if (ship.exists && ship.y > tracks[i].y && ship.y < tracks[i].y + 255)
+					check_track(ship, tracks[i]);
+				tracks[i].set_speed(real_speed);
+			}	
+			if (tracks[0].y > FlxG.height) swap_tilemaps();
+			bg.velocity.y = real_speed * 0.5;
+			//if (FlxG.keys.justPressed.R) FlxG.resetState();
+			if (can_restart && FlxG.keys.pressed.X && FlxG.keys.pressed.C) FlxG.switchState(new PlayState(false));
 
-		sprite_group.sort(FlxSort.byY, FlxSort.ASCENDING);
-		layer3.sort(FlxSort.byY, FlxSort.ASCENDING);
+			FlxG.overlap(ship, barriers, barrier_callback);
+			FlxG.overlap(ship.bullets, copters, bullet_hit_copter);
+			FlxG.overlap(ship, enemy_bullets, bullet_hit_player);
+
+			sprite_group.sort(FlxSort.byY, FlxSort.ASCENDING);
+			layer3.sort(FlxSort.byY, FlxSort.ASCENDING);
+		}
+		
+		#if desktop
+		if (FlxG.keys.justPressed.F)
+			FlxG.fullscreen = !FlxG.fullscreen;
+		#end
 
 		goal_stuff();
+	}
+	
+	function start_game(?t:FlxTimer):Void
+	{
+		if (can_start)
+		{
+			can_start = false;
+			ship.in_control = true;
+			new FlxTimer().start(7, spawn_obstacle, 0);
+			timer.pause();
+			Save.music();
+		}
 	}
 	
 	function bullet_hit_player(_s:Ship, _b:EnemyBullet):Void
 	{
 		_b.kill();
 		_s.hurt(5);
+		FlxG.sound.play("hit", 0.3);
 	}
 
 	function bullet_hit_copter(_b:Bullet, _c:Copter):Void
 	{
 		_c.hurt(1);
 		_b.kill();
+		if (!_c.alive)
+		{
+			ship.health = ZMath.clamp(ship.health + 10, 0, 100);
+			alerts.alert(Alerts.MSG_LIFE_PLUS);
+		}
+		FlxG.sound.play("hit", 0.3);
 	}
 
 	function barrier_callback(_s:Ship, _b:Barrier):Void
 	{
 		_b.explode();
+		FlxG.sound.play("explosion");
 		if(_s.animation.curAnim.name == "fast")
 		{
 			FlxG.camera.shake(0.01, 0.2);
+			_s.health = ZMath.clamp(_s.health + 5, 0, 100);
+			alerts.alert(Alerts.MSG_LIFE_PLUS);
 		}
 		else
 		{
@@ -248,18 +381,21 @@ class PlayState extends FlxState
 
 	function goal_stuff():Void
 	{
-		var indi_x = ZMath.map(cur_dist, 0, goal, indi_map[0], indi_map[1]);
-		indicator.x += (indi_x - indicator.x) * 0.1;
 		
 		if (ship.exists)
 			cur_dist += real_speed / 500;
 
 		if (cur_dist >= goal)
 		{
+			total_dist += Std.int(cur_dist);
 			cur_dist = 0;
-			goal *= 1.1;
+			goal *= 1.25;
 			timer.add_time(0, 30);
+			alerts.alert(Alerts.MSG_TIME_PLUS);
 		}
+		
+		var indi_x = ZMath.map(cur_dist, 0, goal, indi_map[0], indi_map[1]);
+		indicator.x += (indi_x - indicator.x) * 0.1;
 	}
 
 	function swap_tilemaps():Void
@@ -278,7 +414,25 @@ class PlayState extends FlxState
 			speed = 75;
 			ship.poofs.fire(ship.getMidpoint());
 			ship.hurt(1);
+			if (Math.random() > 0.5) FlxG.sound.play("puff", Math.random() * 0.5);
+			if (Math.random() > 0.5) FlxG.sound.play("hit", Math.random() * 0.3);
 		}	
+	}
+	
+	public var can_restart:Bool = false;
+	public var can_start:Bool = false;
+	
+	public function player_die():Void
+	{
+		total_dist += Std.int(cur_dist);
+		if (Save.hi < total_dist) Save.hi = total_dist;
+		Save.save();
+		bring_text_in("SCORE:" + total_dist + "    HI:" + Save.hi);
+		new FlxTimer().start(1).onComplete = function(t:FlxTimer):Void
+		{
+			can_restart = true;
+			FlxTween.tween(xandc.scale, {y:1}, 0.25);
+		}
 	}
 
 }

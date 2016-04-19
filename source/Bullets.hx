@@ -1,4 +1,5 @@
 package;
+import flixel.FlxG;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
@@ -49,6 +50,7 @@ class Bullet extends FlxSprite
 		velocity.set(_v.x, _v.y);
 		exists = true;
 		alpha = 0;
+		FlxG.sound.play("shot" +  ZMath.randomRangeInt(1, 5), 0.2);
 	}
 	
 	override public function update(elapsed:Float):Void 

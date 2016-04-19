@@ -1,5 +1,6 @@
 package ;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
@@ -43,6 +44,7 @@ class Explosion extends FlxSprite
 		animation.play("play");
 		exists = true;
 		angle = 90 * ZMath.randomRangeInt(0, 3);
+		FlxG.sound.play("explode");
 	}
 
 	override public function update(e:Float):Void

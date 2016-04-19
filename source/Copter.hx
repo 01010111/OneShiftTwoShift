@@ -21,7 +21,7 @@ class Copter extends FlxSprite
 	public function new()
 	{
 		super();
-		health = 10;
+		health = 50;
 		loadGraphic("assets/images/copter.png", true, 48, 48);
 		animation.add("play", [0,1,2,3,4,5,6,7], 60);
 		animation.play("play");
@@ -29,6 +29,7 @@ class Copter extends FlxSprite
 		maxVelocity.set(50, 50);
 
 		set_target();
+		new FlxTimer().start(6, set_target);
 		setPosition(ZMath.randomRange(48, FlxG.width - 96), FlxG.height + 48);
 		PlayState.i.copters.add(this);
 
@@ -76,7 +77,7 @@ class Copter extends FlxSprite
 		bullets.fire(getMidpoint(), a_offset);
 	}
 
-	function set_target()
+	function set_target(?t:FlxTimer)
 	{
 		target = FlxPoint.get(ZMath.randomRange(48, FlxG.width - 48), ZMath.randomRange(48,96));
 	}
